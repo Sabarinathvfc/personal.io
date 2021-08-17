@@ -189,7 +189,7 @@
       >
         <h3 class="text-center mb-5">Contact</h3>
         <div class="col-md-6">
-          <form id="submit-form" onsubmit="return validation()" action="">
+          <form id="submit-form" onsubmit="return formValidation()" action="">
             <div class="row">
               <div class="col-lg-6 mb-4">
                 <input
@@ -197,21 +197,21 @@
                   type="text"
                   pattern="[a-zA-Z]*"
                   placeholder="Your Name"
-                  class="form-control fs-6 border-0 shadow-sm"
+                  class="form-control border-0 shadow-sm"
                   name="name"
                 />
                 <div class="text-danger" id="error_name"></div>
               </div>
               <div class="col-lg-6 mb-4">
-                <input id="phone" type="number" placeholder="Phone" class="
-                form-control fs-6 border-0 shadow-sm" name="phone>
+                <input id="phone" type="number" placeholder="Enter phone number"
+                class=" form-control border-0 shadow-sm" name="phone>
                 <div class="text-danger" id="error_phone"></div>
               </div>
-              <div class="col-lg-12 mb-4">
+              <div class="col-md-6 mb-4">
                 <input
                   id="email"
                   type="text"
-                  placeholder="Your Email"
+                  placeholder="Enter your email"
                   class="form-control fs-6 border-0 shadow-sm"
                   name="email"
                 />
@@ -219,7 +219,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-12 mb-4">
+              <div class="col-md-6 mb-4 mx-auto">
                 <textarea
                   id="message"
                   rows="5"
@@ -231,7 +231,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-6 mx-auto">
                 <button type="submit" class="btn btn-primary px-4 fs-6">
                   Submit
                 </button>
