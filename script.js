@@ -1,100 +1,158 @@
-function validation() {
-  var name = document.getElementById("name").value;
-  var phone = document.getElementById("phone").value;
-  var email = document.getElementById("email").value;
-  var message = document.getElementById("message").value;
-  var text;
+var nameValidated = false;
+var phoneValidated = false;
+var emailValidated = false;
+var messageValidated = false;
 
-  if (name.length == 0) {
-    text = "Please Enter your Name";
-    error_name.innerHTML = text;
-    return false;
-  } else {
-    text = " ";
-    error_name.innerHTML = text;
-  }
-
+$("#validationMail").keyup(function () {
   if (
-    name.length < 3 ||
-    name.length > 20 ||
-    name.length == " " ||
-    name.includes("  ")
+    $("#validationMail")
+      .val()
+      .match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
   ) {
-    text = "Please Enter Valid Name";
-    error_name.innerHTML = text;
-    return false;
+    $("#mail-feed").text("Looks good!");
+    $("#mail-feed").show();
+    $("#mail-feed").css("class", "valid-feedback");
+    emailValidated = true;
   } else {
-    text = " ";
-    error_name.innerHTML = text;
+    $("#mail-feed").show();
+    $("#mail-feed").text("Invalid email address!");
+    $("#mail-feed").css("class", "invalid-feedback");
+    emailValidated = false;
   }
-  if (isNaN(phone) || phone.length == 0 || phone.includes("e")) {
-    text = "Please Enter your Number";
-    error_phone.innerHTML = text;
-    return false;
+});
+$("#validationMail").blur(function () {
+  if ($("#validationMail").val() == "") {
+    $("#mail-feed").show();
+    $("#mail-feed").text("Must enter an email address");
+    $("#mail-feed").css("class", "invalid-feedback");
+    emailValidated = false;
   }
+});
 
-  if (isNaN(phone) || phone.length != 10) {
-    text = "Please Enter Valid Number";
-    error_phone.innerHTML = text;
-    return false;
+$("#validationMessage").blur(function () {
+  if ($("#validationMessage").val().length < 50) {
+    $("#msg-feed").show();
+    $("#msg-feed").text("Message length must be at least 50 characters");
+    $("#msg-feed").css("class", "invalid-feedback");
+    messageValidated = false;
   } else {
-    text = " ";
-    error_phone.innerHTML = text;
+    $("#msg-feed").show();
+    $("#msg-feed").text("Looks good!");
+    $("#msg-feed").css("class", "valid-feedback");
+    messageValidated = true;
   }
-
-  if (email.length == 0) {
-    text = "Please Enter Your E-mail";
-    error_mail.innerHTML = text;
-    return false;
+  if ($("#validationMessage").val() == "") {
+    $("#msg-feed").show();
+    $("#msg-feed").text("You must leave a message ");
+    $("#msg-feed").css("class", "invalid-feedback");
+    messageValidated = false;
   }
+});
 
-  if (email.indexOf("@") == -1 || email.length < 6) {
-    text = "Please Enter Valid E-mail";
-    error_mail.innerHTML = text;
-    return false;
+$("#validationName").keyup(function () {
+  if (
+    $("#validationName")
+      .val()
+      .match(/^[A-Za-z][A-Za-z\ ]/)
+  ) {
+    $("#name-feed").show();
+    $("#name-feed").text("Looks good!");
+    $("#name-feed").css("class", "valid-feedback");
+    nameValidated = true;
   } else {
-    text = " ";
-    error_mail.innerHTML = text;
+    $("#name-feed").show();
+    $("#name-feed").text("Invalid name! Check your input");
+    $("#name-feed").css("class", "invalid-feedback");
+    nameValidated = false;
   }
-
-  if (message.length == 0) {
-    text = "Please Enter Your Message";
-    error_message.innerHTML = text;
-    return false;
+  if ($(validationName).val().match()) {
+    $("#name-feed").show();
+    $("#name-feed").text("Initial space not allowed");
+    $("#name-feed").css("class", "invalid-feedback");
   }
-
-  if (message.length <= 40) {
-    text = "Please Enter More Than 40 Characters";
-    error_message.innerHTML = text;
-    return false;
-  } else {
-    text = " ";
-    error_message.innerHTML = text;
-  }
-
-  alert("Submitted Succesfully!");
-  data = {
-    name,
-    phone,
-    email,
-    message,
-  };
-  mail(data);
-  return false;
-}
-
-function mail(data) {
-  $.ajax({
-    url: "https://script.google.com/macros/s/AKfycbw79b_crwItgWTVdvNaUylzUKAdVMOJcla-pHZm/exec",
-    data: data,
-    method: "post",
-    success: function (response) {
-      alert("Form submitted successfully");
-      window.location.reload();
-      //window.location.href="https://google.com"
-    },
-    error: function (err) {
-      alert("Something Error");
-    },
+  $("#validationName").keypress(function (e) {
+    if (
+      (e.charCode >= 33 && e.charCode <= 64) ||
+      (e.charCode >= 91 && e.charCode <= 96) ||
+      (e.charCode >= 123 && e.charCode <= 126)
+    ) {
+      e.preventDefault();
+    }
   });
-}
+  if ($("#validationName").val().length < 4) {
+    $("#name-feed").show();
+    $("#name-feed").text("Name should have at least 3 characters");
+    $("#name-feed").css("class", "invalid-feedback");
+    nameValidated = false;
+  }
+});
+$("#validationName").blur(function () {
+  if ($("#validationName").val() == "") {
+    $("#name-feed").show();
+    $("#name-feed").text("Name should not be empty!");
+    $("#name-feed").css("class", "invalid-feedback");
+    nameValidated = false;
+  }
+});
+$("#validationPhone").keypress(function (e) {
+  return e.charCode >= 48 && e.charCode <= 57;
+});
+$("#validationPhone").keyup(function (e) {
+  if ($("#validationPhone").val().match(/^\d+$/)) {
+    $("#phone-feed").show();
+    $("#phone-feed").text("Looks good!");
+    $("#phone-feed").css("class", "valid-feedback");
+    phoneValidated = true;
+  }
+  if ($("#validationPhone").val().length < 6) {
+    $("#phone-feed").show();
+    $("#phone-feed").text("Phone number should have at least 6 digits!");
+    $("#phone-feed").css("class", "invalid-feedback");
+    phoneValidated = false;
+  }
+});
+
+$("#validationPhone").blur(function () {
+  if ($("#validationPhone").val() == "") {
+    $("#phone-feed").show();
+    $("#phone-feed").text("Phone number is required!");
+    $("#phone-feed").css("class", "invalid-feedback");
+    phoneValidated = false;
+  }
+});
+
+$("#submit-form").submit(function (e) {
+  if (
+    $("#validationName").val() == "" &&
+    $("#validationMail").val() == "" &&
+    $("#validationPhone").val() == "" &&
+    $("#validationMessage").val() == ""
+  ) {
+    e.preventDefault();
+    $("#phone-feed").show();
+    $("#name-feed").show();
+    $("#mail-feed").show();
+    $("#msg-feed").show();
+  } else if (
+    nameValidated &&
+    phoneValidated &&
+    emailValidated &&
+    messageValidated
+  ) {
+    e.preventDefault();
+    $.ajax({
+      url: "https://script.google.com/macros/s/AKfycbz0UDOd3o2UwkTTTAwd-RjqQe7m4oeh9o5BO-JAr0YhRDTJvQQyDjZrHfU0sqc63F7p9A/exec",
+      data: $("#submit-form").serialize(),
+      method: "post",
+      success: function (response) {
+        alert("Form submitted successfully");
+        window.location.reload();
+      },
+      error: function (err) {
+        alert("Something Error");
+      },
+    });
+  } else {
+    e.preventDefault();
+  }
+});
