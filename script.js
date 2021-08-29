@@ -30,9 +30,9 @@ $("#validationMail").blur(function () {
 });
 
 $("#validationMessage").blur(function () {
-  if ($("#validationMessage").val().length < 50) {
+  if ($("#validationMessage").val().length < 20) {
     $("#msg-feed").show();
-    $("#msg-feed").text("Message length must be at least 50 characters");
+    $("#msg-feed").text("Message length must be at least 20 characters");
     $("#msg-feed").css("class", "invalid-feedback");
     messageValidated = false;
   } else {
@@ -64,11 +64,6 @@ $("#validationName").keyup(function () {
     $("#name-feed").text("Invalid name! Check your input");
     $("#name-feed").css("class", "invalid-feedback");
     nameValidated = false;
-  }
-  if ($(validationName).val().match()) {
-    $("#name-feed").show();
-    $("#name-feed").text("Initial space not allowed");
-    $("#name-feed").css("class", "invalid-feedback");
   }
   $("#validationName").keypress(function (e) {
     if (
